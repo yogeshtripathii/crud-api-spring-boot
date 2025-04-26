@@ -42,13 +42,31 @@ In essence, this API provides the essential building blocks for any application 
   "price": 25.99,
   "quantity": 100
 }
+```
 
 ## Authentication
 
-The API is secured using basic HTTP authentication for all endpoints except for GET requests to /api/product/**.
+The API is secured using basic HTTP authentication for all endpoints except for `GET` requests to `/api/product/**`. To access the protected endpoints, you need to provide your username and password in the `Authorization` header of your HTTP request.
 
-| Method | URL             | Description                         |                                
-| :----- | :-------------- | :------------------------------     | 
-| POST   | `/api/product`   | Creates a new product require auth.|
-| DELETE | `/api/product/{id}` | Delete a product require auth.    |
-| PUT    | `/api/product/{id}` | Updates an existing product require auth.| 
+### Protected Endpoints
+
+| Method | URL             | Description                                  |
+| :----- | :-------------- | :------------------------------------------- |
+| POST   | `/api/product`   | Creates a new product (requires authentication). |
+| DELETE | `/api/product/{id}` | Deletes a product (requires authentication).   |
+| PUT    | `/api/product/{id}` | Updates an existing product (requires authentication). |
+
+**Authentication Details:**
+
+| Detail      | Description                                                                                               |
+| :---------- | :-------------------------------------------------------------------------------------------------------- |
+| **Method** | Basic HTTP Authentication                                                                                 |
+| **Username** | Configured in your `application.properties` or `application.yml` file under the property `basic.auth.username`. |
+| **Password** | Configured in your `application.properties` or `application.yml` file under the property `basic.auth.password`. |
+
+**Example using `curl`:**
+
+To make an authenticated request using `curl`, you would use the `-u` option followed by your username and password:
+
+```bash
+curl -u your_username:your_password -X POST -H "Content-Type: application/json" -d '{"name": "New Product", "price": 19.99, "quantity": 50}' http://localhost:8080/api/product
